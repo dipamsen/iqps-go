@@ -99,6 +99,43 @@ pub async fn search(
     response
 }
 
+/// Fetches a paper by its ID.
+///     
+/// # Request Query Parameters
+/// * `id`: The ID of the paper to fetch.
+pub async fn get_paper(
+    State(state): State<RouterState>,
+    Query(params): Query<HashMap<String, String>>,
+) -> HandlerReturn<qp::BaseQP> {
+    let response = if let Some(id) = params.get("id") {
+        if let Ok(id) = id.parse::<i32>() {
+            if let Ok(paper) = state.db.get_paper_by_id(id).await {
+                Ok(BackendResponse::ok(
+                    "Successfully fetched the paper.".into(),
+                    paper.qp.with_url(&state.env_vars)?,
+                ))
+            } else {
+                Ok(BackendResponse::error(
+                    "Paper not found.".into(),
+                    StatusCode::NOT_FOUND,
+                ))
+            }
+        } else {
+            Ok(BackendResponse::error(
+                "Invalid `id` URL parameter.".into(),
+                StatusCode::BAD_REQUEST,
+            ))
+        }
+    } else {
+        Ok(BackendResponse::error(
+            "`id` URL parameter is required.".into(),
+            StatusCode::BAD_REQUEST,
+        ))
+    };
+
+    response
+}
+
 #[derive(Deserialize)]
 /// The request format for the OAuth endpoint
 pub struct OAuthReq {

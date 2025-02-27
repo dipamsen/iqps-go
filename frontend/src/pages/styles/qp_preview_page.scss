@@ -1,0 +1,22 @@
+@import "../../styles/variables";
+
+#qp-preview-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5rem;
+
+  .paper-preview {
+    width: 100%;
+    padding: 0 15%;
+
+    embed {
+      width: 100%;
+      height: 100%;
+    }
+
+    @media only screen and (max-width: 768px) {
+      padding: 0;
+    }
+  }
+}

@@ -42,6 +42,7 @@ pub fn get_router(env_vars: &EnvVars, db: Database) -> axum::Router {
         .route("/oauth", axum::routing::post(handlers::oauth))
         .route("/healthcheck", axum::routing::get(handlers::healthcheck))
         .route("/search", axum::routing::get(handlers::search))
+        .route("/get_paper", axum::routing::get(handlers::get_paper))
         .layer(DefaultBodyLimit::max(2 << 20)) // Default limit of 2 MiB
         .route("/upload", axum::routing::post(handlers::upload))
         .layer(DefaultBodyLimit::max(50 << 20)) // 50 MiB limit for upload endpoint

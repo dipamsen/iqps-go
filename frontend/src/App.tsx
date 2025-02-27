@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SearchPage from "./pages/SearchPage";
 import UploadPage from "./pages/UploadPage";
+import QPPreviewPage from "./pages/QPPreviewPage";
 import OAuthPage from "./pages/OAuthPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import { AuthProvider } from "./utils/auth";
@@ -20,6 +21,10 @@ function App() {
             <Route
               path="/upload"
               element={<UploadPage />}
+            />
+            <Route
+              path="/qp/:id"
+              element={<QPPreviewPage />}
             />
             <Route
               path="/oauth"
